@@ -1,3 +1,6 @@
+# Deep Truth Portfolio
+
+Welcome to my Deep Truth project.
 
 ![Deep Truth Logo](logo.png)
 
@@ -14,7 +17,7 @@ In this book, you will find:
 * **Experiments:** Interactive notebooks and results from our research.
 * **Analysis:** Our findings and conclusions drawn from the data.
 
-*Use the navigation pane on the left to explore the content.* 
+*Use the navigation pane on the left to explore the content.*
 
 ```{tableofcontents}
 ```
