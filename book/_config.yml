@@ -1,33 +1,29 @@
-# Book settings
-# Learn more at https://jupyterbook.org/customize/config.html
+
 
 title: Deep Truth
 author: Abainza, Casino, Culanggo, dela Cruz
 logo: logo.png
 
-# Force re-execution of notebooks on each build.
-# See https://jupyterbook.org/content/execute.html
+
 execute:
   execute_notebooks: force
 
-# Define the name of the latex output file for PDF builds
+
 latex:
   latex_documents:
     targetname: book.tex
 
-# Add a bibtex file so that we can create citations
+
 bibtex_bibfiles:
   - references.bib
 
-# Information about where the book exists on the web
-repository:
-  url: https://github.com/Danecash/Deep-Truth  # ← Change to YOUR repository
-  path_to_book: book  # ← Change from 'docs' to 'book'
-  branch: main  # ← Change from 'master' to 'main'
 
-# Add GitHub buttons to your book
-# See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
+repository:
+  url: https://github.com/Danecash/Deep-Truth
+  path_to_book: book
+  branch: master  # Changed from 'main' to 'master'
+
 html:
-  baseurl: /Deep-Truth  # ← ADD THIS LINE - must match your repository name
+  baseurl: /Deep-Truth
   use_issues_button: true
   use_repository_button: true

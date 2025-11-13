@@ -1,8 +1,5 @@
 format: jb-book
-root: intro.md
+root: intro
 
-parts:
-  - caption: Week 1
-    chapters:
-      - file: Week 1/Project Proposal
-
+chapters:
+- file: Week_1/project_proposal
