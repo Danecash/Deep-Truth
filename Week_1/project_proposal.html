@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="canonical" href="/Deep-Truth/Week_1/project_proposal.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Integrating Deep Learning with Ground Truth" href="../intro.html" />
+    <link rel="prev" title="Deep Truth Portfolio" href="../intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -169,7 +169,7 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../intro.html">
-                    Integrating Deep Learning with Ground Truth
+                    Deep Truth Portfolio
                 </a>
             </li>
         </ul>
@@ -371,7 +371,10 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">1. Background</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">2. Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">2. Objectives</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -389,25 +392,38 @@ document.write(`
 <hr class="docutils" />
 <section id="background">
 <h2>1. Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h2>
-<p>American Sign Language (ASL) serves as a vital means of communication for the Deaf and Hard-of-Hearing (DHH) community. However, the language barrier between sign language users and non-signers often hinders effective communication. Translating ASL into written or spoken text can bridge this gap, especially in digital and educational environments.</p>
-<p>Traditional computer vision approaches, such as manual feature extraction or rule-based gesture recognition, struggle to handle the complexity and variability of hand movements, lighting conditions, and signer differences.</p>
-<p>Deep learning offers a robust solution to this challenge. Convolutional Neural Networks (CNNs) can automatically learn spatial features from ASL hand gestures, enabling high-accuracy recognition of hand signs representing individual letters. When combined with Large Language Models (LLMs), which excel at contextual understanding and sequence reconstruction, the system can convert recognized letter sequences into coherent text output.</p>
-<p>This integration leverages CNNs for visual understanding and LLMs for linguistic composition, making deep learning an effective and scalable approach for ASL video-to-text translation.</p>
+<p>American Sign Language (ASL) constitutes a fully expressive visual language, integrating hand gestures, facial expressions, and body movements to convey meaning. While primarily used by Deaf and Hard-of-Hearing (DHH) individuals, ASL has gained increasing attention among non-signers seeking practical communication skills. Its prominence as a second language has grown substantially; according to the Modern Language Association, ASL ranks as the third most-studied modern or foreign language at U.S. universities [1], reflecting considerable interest among hearing learners. Moreover, research demonstrates that acquiring ASL does not hinder the development of spoken English, underscoring its viability as a linguistically safe learning option [2]. Among the foundational components of ASL, fingerspelling, the sequential representation of letters and numbers, plays a critical role in conveying proper nouns, technical terminology, and less common words. Mastery of fingerspelling requires not only recognition of individual handshapes but also the ability to produce and sequence them accurately to form meaningful words and numerical expressions.
+Despite its importance, traditional educational approaches for teaching fingerspelling, including static illustrations, printed charts, and multiple-choice exercises, primarily assess recognition of isolated letters. These methods provide limited insight into a learner’s capacity to construct sequences accurately and often fail to capture prevalent challenges, such as inconsistent hand positioning, timing errors between consecutive letters, and the translation of visual recognition into motor execution. In contrast, research in language acquisition highlights that active production, rather than passive recognition, significantly enhances retention, comprehension, and the transfer of knowledge to practical contexts [3].
+Perceptual-motor processes are also integral to effective ASL learning. Martinez and Singleton (2018) demonstrated that movement short-term memory and visuospatial short-term memory jointly predict the proficiency with which hearing non-signers acquire signs, emphasizing the necessity of practicing actual hand movements rather than relying solely on visual recognition [4]. These findings indicate that educational systems capable of delivering immediate feedback on free-form fingerspelling attempts would address a critical pedagogical gap, particularly for learners engaged in remote or application-based instruction, by supporting skill development beyond rote memorization and multiple-choice evaluation.
+Traditional computer vision techniques frequently encounter limitations due to variability in hand shapes across signers, which impedes accurate classification of fingerspelled letters and numbers [5]. Advances in deep learning have addressed these challenges, offering robust solutions. Convolutional neural networks (CNNs) have demonstrated high efficacy in image-based classification of complex handshapes. For example, Alsharif et al. (2023) evaluated multiple deep architectures, including ResNet‑50 and EfficientNet, on a dataset of over 87,000 ASL alphabet images, achieving accuracy rates exceeding 99.9% and demonstrating the feasibility of reliable letter-level recognition [6]. Similarly, Zhang (2025) compared several CNN models, including Custom CNN, ResNet‑50, EfficientNet‑B0, and Inception‑V3, on the same dataset, reporting near-perfect performance for EfficientNet‑B0 and ResNet‑50 (99.8% and 99.6%, respectively) [7]. Additionally, frameworks such as MediaPipe facilitate real-time hand detection and landmark extraction, enabling CNN models to focus exclusively on letter and number classification rather than hand localization. This approach simplifies preprocessing and enhances recognition accuracy, making real-time feedback for educational applications feasible [8].
+Together, these studies establish the potential of CNN-based recognition and real-time hand tracking to provide immediate feedback on spelling accuracy and sequence formation, even when limited to alphabet and numerical recognition. While such frameworks do not interpret facial expressions, grammatical context, or full ASL comprehension, they represent a meaningful advancement in supporting literacy in fingerspelling and structured skill development for non-signers, particularly in remote or application-based learning environments.</p>
 </section>
 <hr class="docutils" />
 <section id="objectives">
 <h2>2. Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">#</a></h2>
-<p>The main objective of this study is to develop a deep learning-based system for translating ASL alphabet hand signs from video input into textual representation. Specifically, the study aims to:</p>
+<p>The primary objective of this study is to develop an automated ASL fingerspelling recognition system designed for integration into educational platforms. The system will be trained on image-based datasets of ASL alphabet and number hand signs and evaluated using pre-recorded videos of fingerspelling attempts. This study focuses exclusively on offline processing, with real-time recognition recommended for future research. To achieve this aim, the study pursues the following specific objectives:</p>
 <ol class="arabic simple">
-<li><p><strong>Implement a CNN-based Model</strong><br />
-To accurately recognize ASL hand signs representing individual letters from video frames.</p></li>
-<li><p><strong>Integrate a Large Language Model (LLM)</strong><br />
-To reconstruct recognized letter sequences into meaningful text.</p></li>
-<li><p><strong>Evaluate the Model’s Performance</strong><br />
-In terms of classification accuracy, robustness under varying lighting and motion conditions, and translation coherence.</p></li>
-<li><p><strong>Compare results across different CNN architectures</strong><br />
-(e.g., VGG, ResNet, MobileNet) to identify the most effective model for hand sign recognition.</p></li>
+<li><p><strong>Train a CNN Model for ASL Letter and Number Recognition</strong><br />
+Develop and train a convolutional neural network capable of accurately classifying individual ASL fingerspelled letters and numbers from static images. The model will learn robust handshape features to support reliable recognition across varying visual conditions.</p></li>
+<li><p><strong>Apply the Model to Pre-Recorded Video Inputs</strong><br />
+Implement a video-processing pipeline that extracts frames from pre-recorded videos and applies the trained CNN to generate frame-level predictions, enabling practical evaluation of the model’s performance in a more realistic, sequential setting.</p></li>
+<li><p><strong>Reconstruct Letter and Number Sequences From Frame Predictions</strong><br />
+Design and apply a post-processing method to convert per-frame classifications into coherent letter or number sequences. This includes temporal smoothing, removal of transitional frames, and collapsing repeated predictions to produce accurate spellings of words or numbers.</p></li>
+<li><p><strong>Evaluate Model Performance and Identify the Most Effective Architecture</strong><br />
+Evaluate the CNN’s classification accuracy using image and pre-recorded video datasets, measuring per-letter accuracy, Character Error Rate (CER), and using confusion matrices. Compare various CNN architectures (VGG, ResNet, MobileNet) to find the best balance of accuracy, efficiency, and generalization.</p></li>
 </ol>
+<hr class="docutils" />
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h3>
+<p>[1] ASL, the 3rd most studied foreign language. (2000, January 1). 1996-2025 Jolanta A. Lapiak. <a class="reference external" href="https://www.handspeak.com/learn/8/">https://www.handspeak.com/learn/8/</a></p>
+<p>[2] Pontecorvo, E., Higgins, M., Mora, J., Lieberman, A. M., Pyers, J., &amp; Caselli, N. K. (2023). Learning a Sign Language Does Not Hinder Acquisition of a Spoken Language. <em>Journal of Speech, Language, and Hearing Research : JSLHR, 66</em>(4), 1291–1308. <a class="reference external" href="https://doi.org/10.1044/2022_JSLHR-22-00505">https://doi.org/10.1044/2022_JSLHR-22-00505</a></p>
+<p>[3] Hopman, E. W. M., &amp; MacDonald, M. C. (2018). Production Practice During Language Learning Improves Comprehension. <em>Psychological Science, 29</em>(6), 961–971. <a class="reference external" href="https://doi.org/10.1177/0956797618754486">https://doi.org/10.1177/0956797618754486</a></p>
+<p>[4] Martinez, D., &amp; Singleton, J. L. (2018). Predicting sign learning in hearing adults: The role of perceptual-motor (and phonological?) processes. <em>Applied Psycholinguistics, 39</em>(5), 905–931. doi:10.1017/S0142716418000048</p>
+<p>[5] Camgoz, N.C., Koller, O., Hadfield, S., Bowden, R.: Neural sign language translation. <em>Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition</em>, 7784–7793 (2018)</p>
+<p>[6] Alsharif, B., Altaher, A. S., Altaher, A., Ilyas, M., &amp; Alalwany, E. (2023). Deep Learning Technology to Recognize American Sign Language Alphabet. <em>Sensors, 23</em>(18), 7970. <a class="reference external" href="https://doi.org/10.3390/s23187970">https://doi.org/10.3390/s23187970</a></p>
+<p>[7] Zhang, C. (2025). A comparative study of deep CNN architectures for static American sign language recognition. <em>Science and Technology of Engineering Chemistry and Environmental Protection, 1</em>(4). <a class="reference external" href="https://doi.org/10.61173/yackf205">https://doi.org/10.61173/yackf205</a></p>
+<p>[8] Almarzouqi, H., Hussain, A.J., Al-Jumeily, D., Fergus, P.: Vision-based American Sign Language recognition using deep learning. <em>International Journal of Advanced Computer Science and Applications 11</em>(4), 237–244 (2020)</p>
+</section>
 </section>
 </section>
 
@@ -447,7 +463,7 @@ In terms of classification accuracy, robustness under varying lighting and motio
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Integrating Deep Learning with Ground Truth</p>
+        <p class="prev-next-title">Deep Truth Portfolio</p>
       </div>
     </a>
 </div>
@@ -467,7 +483,10 @@ In terms of classification accuracy, robustness under varying lighting and motio
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">1. Background</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">2. Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">2. Objectives</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
