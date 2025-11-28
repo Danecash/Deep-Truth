@@ -1,0 +1,599 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Data Collection and Preprocessing &#8212; Deep Truth</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Week_2/data_collection';</script>
+    <link rel="canonical" href="/Deep-Truth/Week_2/data_collection.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="ASL Video-to-Text Translation Using CNN-Based Hand Sign Recognition and LLM Sequence Reconstruction" href="../Week_1/project_proposal.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Deep Truth - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Deep Truth - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Deep Truth Portfolio
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1 Project Proposal</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Week_1/project_proposal.html">ASL Video-to-Text Translation Using CNN-Based Hand Sign Recognition and LLM Sequence Reconstruction</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2 Data Collection</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Collection and Preprocessing</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Danecash/Deep-Truth" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Danecash/Deep-Truth/issues/new?title=Issue%20on%20page%20%2FWeek_2/data_collection.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Week_2/data_collection.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Data Collection and Preprocessing</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-collection">1 Data Collection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preprocessing">2 Data Preprocessing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-dataset-preparation-for-model-training-and-testing">2.1 Image Dataset Preparation for Model Training and Testing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#video-dataset-preparation-for-testing">2.2 Video Dataset Preparation for Testing</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="data-collection-and-preprocessing">
+<h1>Data Collection and Preprocessing<a class="headerlink" href="#data-collection-and-preprocessing" title="Permalink to this heading">#</a></h1>
+<p>Usher Raymond Abainza, Dane Casey Casino, Kein Jake Culangao, and Karylle dela Cruz</p>
+<section id="data-collection">
+<h2>1 Data Collection<a class="headerlink" href="#data-collection" title="Permalink to this heading">#</a></h2>
+<p><strong>Image Dataset.</strong> The dataset used in this study is the American Sign Language (ASL) Dataset, sourced from Kaggle. It is organized to represent 26 classes, corresponding to the letters of the alphabet. Each class is stored in a separate folder, containing images of hands forming the corresponding sign (Fig. 1 shows an example). Most classes have 70 images, with the exception of the letter t, which only contains 65, creating a minor imbalance. This small variation is not expected to significantly affect model performance. If needed, techniques such as oversampling or weighted loss functions can be applied to mitigate the effects of class imbalance.</p>
+<p>To provide further context, the inclusion of all letters in a structured folder hierarchy allows for automatic labeling and consistent preprocessing, which simplifies model training and ensures reproducibility. The minor imbalance in the letter ‘t’ is acknowledged but does not compromise the integrity of the dataset, and addressing it through oversampling or loss weighting ensures fairness across classes if necessary.</p>
+<p>The dataset was collected to facilitate the development of machine learning models for hand gesture recognition, providing a standardized set of images for training, validation, and testing. The images are captured in varying lighting conditions and hand orientations, which helps the model generalize better to different real-world scenarios.</p>
+<p>This variability in lighting and orientation is intentional, simulating realistic environments in which users might practice ASL, and thus the dataset supports robust model evaluation beyond laboratory conditions.</p>
+<p><img alt="image" src="../_images/1.png" /></p>
+<p><strong>Figure 1:</strong> Random sample images from the American Sign Language (ASL) Dataset with their corresponding labels</p>
+<p><strong>Video Dataset.</strong> In addition to the image dataset, the researchers will create a custom video dataset to evaluate the model’s ability to recognize ASL gestures in real-time motion. This dataset will consist of short video recordings, each approximately 5 to 10 seconds in duration. The participants will be instructed to spell out their name using ASL hand signs, producing a sequence of gestures that the model will later process on a frame-by-frame basis.</p>
+<p>The creation of this video dataset complements the static image dataset, bridging the gap between isolated letter recognition and continuous sequence processing. By capturing motion, the videos allow evaluation of temporal dynamics and provide a more realistic assessment of model performance in practical use cases.</p>
+<p>The videos will be recorded using consistent settings, including controlled lighting, a stable camera position, and a clear background to minimize noise and visual distractions. Each recorded clip will then be segmented into individual frames (Fig. 2 shows an example), allowing the image-trained model to classify each frame and reconstruct the spelled name. This approach enables the integration of static-image-based training with dynamic gesture recognition in videos.</p>
+<p>Such controlled recording ensures that variability in environmental factors is minimized, allowing the focus to remain on the model’s capacity to handle motion and sequence reconstruction without confounding noise.</p>
+<p><img alt="image" src="../_images/2.png" /></p>
+<p><strong>Figure 2:</strong> Random sample frames from the video dataset with their corresponding video names</p>
+<p>To clarify the role of the video dataset within the overall study, it was designed with two primary objectives in mind:</p>
+<ol class="arabic simple">
+<li><p><strong>To test real-world applicability</strong>, ensuring the system can interpret continuous gesture sequences rather than isolated static images.</p></li>
+<li><p><strong>To evaluate temporal consistency</strong>, determining how well the model maintains accuracy across varied motions, speeds, and transitions between gestures.</p></li>
+</ol>
+<p>By combining the static image dataset with the custom video dataset, the project ensures a more robust evaluation of the model’s performance in both controlled and dynamic environments.</p>
+</section>
+<section id="data-preprocessing">
+<h2>2 Data Preprocessing<a class="headerlink" href="#data-preprocessing" title="Permalink to this heading">#</a></h2>
+<section id="image-dataset-preparation-for-model-training-and-testing">
+<h3>2.1 Image Dataset Preparation for Model Training and Testing<a class="headerlink" href="#image-dataset-preparation-for-model-training-and-testing" title="Permalink to this heading">#</a></h3>
+<p>Before training the CNN, the ASL image dataset required systematic preprocessing to ensure consistency, enhance learning efficiency, and facilitate reliable evaluation. These steps transform raw images into a standardized format suitable for input to deep neural networks while maintaining the integrity of visual features critical for accurate letter recognition. Proper preprocessing also mitigates variability due to lighting, hand orientation, or background differences, which supports generalization to new, unseen data.</p>
+<p>To achieve these goals, several preprocessing steps were applied:</p>
+<p><strong>Resizing.</strong> All images were resized to 224(\times)224 pixels, which is compatible with standard Convolutional Neural Networks (CNNs) such as ResNet. This ensures uniformity across the dataset and reduces computational complexity.</p>
+<p>Resizing standardizes input dimensions, allowing the CNN to process all images consistently without distortion or loss of feature representation. It also aligns the dataset with the input expectations of pre-trained architectures, enabling transfer learning and efficient feature extraction.</p>
+<p><strong>Normalization.</strong> Image pixel values were normalized using the mean [0.485, 0.456, 0.406] and standard deviation [0.229, 0.224, 0.225] (common for pre-trained ImageNet models). This step ensures that the model converges faster and improves training stability. Normalization centers the data and scales pixel values, preventing issues with gradient instability and ensuring that the network learns meaningful features rather than being influenced by arbitrary intensity differences.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">((</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">([</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">])</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+<p>The transformation pipeline prepares raw images for efficient CNN training. Resizing ensures uniform dimensions, converting to tensors makes the data compatible with PyTorch, and normalization scales the pixel values to stabilize gradients and accelerate convergence during training. This pipeline is particularly critical when leveraging pre-trained models, as it aligns the input distribution with that of the ImageNet dataset, supporting transfer learning and robust feature extraction.</p>
+<p><strong>Label Encoding.</strong> Each folder name (0-9, a-z) was mapped to a unique numerical label using the folder structure, which is automatically handled by PyTorch’s ImageFolder class. This encoding allows the model to output class predictions in a format suitable for cross-entropy loss computation.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">ImageFolder</span><span class="p">(</span><span class="s1">&#39;asl_dataset&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Automated label encoding ensures consistency, reduces the risk of manual error, and facilitates seamless integration of categorical targets with the model’s training process. By leveraging folder names as labels, the workflow becomes reproducible and scalable across datasets of varying size or complexity.</p>
+<p><strong>Train-Validation-Test Split and Data Loading.</strong> To properly evaluate the model while maintaining reliable performance metrics, the dataset was divided into training, validation, and testing sets using an 80%-10%-10% split. This ensures that all classes are represented across the subsets.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">total_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+<span class="n">train_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.8</span> <span class="o">*</span> <span class="n">total_size</span><span class="p">)</span>
+<span class="n">val_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.1</span> <span class="o">*</span> <span class="n">total_size</span><span class="p">)</span>
+<span class="n">test_size</span> <span class="o">=</span> <span class="n">total_size</span> <span class="o">-</span> <span class="n">train_size</span> <span class="o">-</span> <span class="n">val_size</span>  <span class="c1"># Ensures exact total</span>
+
+<span class="n">train_dataset</span><span class="p">,</span> <span class="n">val_dataset</span><span class="p">,</span> <span class="n">test_dataset</span> <span class="o">=</span> <span class="n">random_split</span><span class="p">(</span>
+    <span class="n">dataset</span><span class="p">,</span> <span class="p">[</span><span class="n">train_size</span><span class="p">,</span> <span class="n">val_size</span><span class="p">,</span> <span class="n">test_size</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Splitting the dataset in this way provides a structured framework for model evaluation. The training set supports feature learning, the validation set allows monitoring and hyperparameter tuning during training, and the test set provides an unbiased measure of final performance. Ensuring proportional representation of all classes across subsets prevents skewed evaluation and promotes reliable generalization.</p>
+<p>DataLoaders were then created to efficiently feed the data into the model in mini-batches. A batch size of 32 was used, with shuffling applied to the training set to improve model generalization, while the validation and test sets were loaded sequentially.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">val_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">val_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">test_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This setup ensures that the model receives data in manageable batches, allowing for optimized GPU usage and stable gradient updates. Shuffling the training set introduces randomness that prevents the model from memorizing data order, while sequential loading of validation and test sets preserves data integrity for accurate evaluation. Overall, this configuration supports effective learning, validation, and testing of the CNN on both static images and downstream video frames.</p>
+</section>
+<section id="video-dataset-preparation-for-testing">
+<h3>2.2 Video Dataset Preparation for Testing<a class="headerlink" href="#video-dataset-preparation-for-testing" title="Permalink to this heading">#</a></h3>
+<p>To evaluate model performance on video data, a preprocessing pipeline was applied to convert videos into image frames suitable for CNN-based models. This step bridges the gap between static-image training and dynamic sequence evaluation, ensuring that the model can be assessed on real-world motion data while maintaining consistency with the preprocessing applied to static images. Proper preparation of video frames is essential to accurately capture temporal information without introducing artifacts that could degrade model performance.</p>
+<p><strong>Frame Extraction.</strong> Videos in the test set were processed individually. Frames were extracted at a target rate of 5 frames per second (FPS) to standardize temporal sampling and reduce computational load.</p>
+<p>Standardizing the frame rate ensures uniform temporal granularity across all videos, balancing the need for sufficient temporal resolution with computational efficiency. By extracting frames consistently, the model can evaluate motion and gesture transitions reliably, without being biased by differences in video recording speed or duration.</p>
+<p><strong>Preprocessing.</strong> Each extracted frame was converted to RGB, resized to 224×224 pixels, and normalized using the mean [0.485, 0.456, 0.406] and standard deviation [0.229, 0.224, 0.225] consistent with the image dataset preprocessing. This ensures that the frames are compatible with the pre-trained CNN models used for classification.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">video_test_dataset</span> <span class="o">=</span> <span class="n">ImageFolder</span><span class="p">(</span><span class="s2">&quot;videos_processed&quot;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Maintaining the same preprocessing steps as the image dataset guarantees that the model receives input in a familiar format, preserving feature consistency. Converting to RGB ensures compatibility with CNNs trained on three-channel images, resizing maintains input dimensionality, and normalization aligns the pixel distribution with what the network expects, which supports stable predictions.</p>
+<p><strong>Directory Structure and Label Encoding.</strong> Frames from each video were stored in a dedicated folder, preserving class structure. PyTorch’s ImageFolder automatically maps each folder to a numerical label, making the dataset ready for testing.</p>
+<p>Organizing frames in this structured manner not only facilitates automated label assignment but also enables reproducibility and easy expansion of the dataset. This approach preserves the association between frames and their corresponding gestures or letters, which is critical for evaluating sequence reconstruction accuracy.</p>
+<p><strong>Data Loading.</strong> A DataLoader was used to feed the video frames in mini-batches during testing, with shuffling disabled to maintain frame order:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">video_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">video_test_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Sequential loading preserves the temporal order of frames, which is essential for post-processing and letter sequence reconstruction. Mini-batch loading also ensures computational efficiency during evaluation, allowing the model to process video data without overloading memory while maintaining accurate frame-level assessment.</p>
+<p>This setup allows the model, trained on static images, to be evaluated on video data by processing each frame individually, providing an assessment of performance on dynamic inputs. By combining consistent frame extraction, standardized preprocessing, structured labeling, and orderly data loading, the pipeline ensures that evaluation reflects both the model’s classification accuracy and its ability to maintain performance across continuous sequences of gestures.</p>
+<p>Collectively, the procedures described for both image and video datasets establish a robust foundation for model development. By ensuring consistency in data format, preprocessing, and labeling, the pipeline enables accurate and reproducible evaluation of the CNN’s performance. The integration of static images with frame-level video evaluation also prepares the system for subsequent experiments in sequence reconstruction, providing a seamless bridge from data preparation to model design and testing.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Week_2"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Week_1/project_proposal.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">ASL Video-to-Text Translation Using CNN-Based Hand Sign Recognition and LLM Sequence Reconstruction</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-collection">1 Data Collection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preprocessing">2 Data Preprocessing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-dataset-preparation-for-model-training-and-testing">2.1 Image Dataset Preparation for Model Training and Testing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#video-dataset-preparation-for-testing">2.2 Video Dataset Preparation for Testing</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Abainza, Casino, Culanggo, dela Cruz
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
