@@ -2,9 +2,9 @@ format: jb-book
 root: intro
 
 parts:
-  - caption: Week 1: Project Proposal
+  - caption: Week 1 Project Proposal
     chapters:
       - file: Week_1/project_proposal
-  - caption: Week 2: Data Collection
+  - caption: Week 2 Data Collection
     chapters:
       - file: Week_2/data_collection
