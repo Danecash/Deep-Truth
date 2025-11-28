@@ -8,3 +8,6 @@ parts:
   - caption: Week 2 Data Collection
     chapters:
       - file: Week_2/data_collection
+  - caption: Week 3 Model Design and Initial Experiments
+    chapters:
+      - file: Week_3/model_design
