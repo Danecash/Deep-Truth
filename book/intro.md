@@ -1,6 +1,8 @@
-# Welcome to the Deep Truth Project
+# Deep Truth Portfolio
 
-![Deep Truth Logo](path/to/your/logo.png)
+Welcome to my Deep Truth project.
+
+![Deep Truth Logo](logo.png)
 
 ## Integrating Deep Learning with Ground Truth
 
@@ -15,7 +17,7 @@ In this book, you will find:
 * **Experiments:** Interactive notebooks and results from our research.
 * **Analysis:** Our findings and conclusions drawn from the data.
 
-To get started, explore the chapters and sections listed below or use the navigation pane on the left.
+*Use the navigation pane on the left to explore the content.*
 
 ```{tableofcontents}
 ```

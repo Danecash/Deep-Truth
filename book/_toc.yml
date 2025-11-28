@@ -1,5 +1,10 @@
 format: jb-book
 root: intro
 
-chapters:
-- file: Week_1/project_proposal
+parts:
+  - caption: Week 1: Project Proposal
+    chapters:
+      - file: Week_1/project_proposal
+  - caption: Week 2: Data Collection
+    chapters:
+      - file: Week_2/data_collection
