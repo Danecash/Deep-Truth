@@ -1,0 +1,590 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Model Design and Initial Experiments &#8212; Deep Truth</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Week_3/model_design';</script>
+    <link rel="canonical" href="/Deep-Truth/Week_3/model_design.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Data Collection and Preprocessing" href="../Week_2/data_collection.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Deep Truth - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Deep Truth - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Deep Truth Portfolio
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1 Project Proposal</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Week_1/project_proposal.html">ASL Video-to-Text Translation Using CNN-Based Hand Sign Recognition and LLM Sequence Reconstruction</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2 Data Collection</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Week_2/data_collection.html">Data Collection and Preprocessing</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3 Model Design and Initial Experiments</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Model Design and Initial Experiments</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Danecash/Deep-Truth" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Danecash/Deep-Truth/issues/new?title=Issue%20on%20page%20%2FWeek_3/model_design.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Week_3/model_design.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Model Design and Initial Experiments</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-design">1 Model Design</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initial-experiments">2 Initial Experiments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initial-results">3 Initial Results</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="model-design-and-initial-experiments">
+<h1>Model Design and Initial Experiments<a class="headerlink" href="#model-design-and-initial-experiments" title="Permalink to this heading">#</a></h1>
+<p>Usher Raymond Abainza, Dane Casey Casino, Kein Jake Culanggo, and Karylle dela Cruz</p>
+<section id="model-design">
+<h2>1 Model Design<a class="headerlink" href="#model-design" title="Permalink to this heading">#</a></h2>
+<p>To evaluate the performance of different convolutional neural network (CNN) architectures on the image-based sign recognition task, three widely used deep learning models were implemented and trained from scratch: VGG16, ResNet18, and MobileNetV2. These architectures represent three distinct design philosophies, namely deep sequential networks, residual learning, and lightweight mobile-friendly models. This allows a comprehensive comparison in terms of accuracy, stability, representational capacity, and training behavior.</p>
+<p>The selection of these architectures was guided by their contrasting structural biases and the complementary insights they provide about feature extraction in hand-sign imagery. VGG16 serves as a classical deep stack of convolutional layers without shortcut connections, making it ideal for examining how depth alone influences discriminative performance on fine-grained gesture differences. ResNet18, with its residual skip connections, mitigates vanishing gradients and facilitates the learning of more stable low-level and mid-level features, which is theoretically advantageous for gestures that exhibit subtle variations in contour and finger positioning. MobileNetV2, designed around inverted residual blocks and depthwise separable convolutions, prioritizes computational efficiency at the cost of reduced expressiveness, making it an ideal reference point for evaluating the trade-off between model compactness and recognition accuracy.</p>
+<p>A unified function was developed to construct each model by replacing the final fully connected layers with task-specific classifiers. This ensured consistent output dimensions across architectures while keeping their internal feature extraction mechanisms intact.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">build_model</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;vgg16&quot;</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">vgg16</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">classifier</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">4096</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;resnet18&quot;</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet18</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">fc</span><span class="o">.</span><span class="n">in_features</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;mobilenetv2&quot;</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">mobilenet_v2</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">classifier</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">classifier</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">in_features</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Choose: vgg16, resnet18, mobilenetv2&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">model</span>
+</pre></div>
+</div>
+<p>This design choice preserves the architectural priors of each model and restricts modifications only to the classification head. Such a configuration ensures that the comparison across architectures is controlled and scientifically valid, since the representational backbone remains unchanged and the only differing factor is the inductive bias inherent to each architecture. The fixed output structure also maintains compatibility with cross-entropy loss functions and supports fair evaluation of gradient behavior, optimization dynamics, and generalization capacity.</p>
+<p><strong>VGG16:</strong> The final classifier layer was replaced with a new linear layer that maps 4096 features to the number of output classes.</p>
+<p><strong>ResNet18:</strong> The fully connected layer was replaced with a linear layer that maps the model’s input feature size to the number of output classes.</p>
+<p><strong>MobileNetV2:</strong> The last classifier block was updated by replacing the output layer with a linear layer that maps its input feature size to the number of output classes.</p>
+<p>These modifications introduce minimal architectural disruption while enabling the backbone to learn task-specific features. VGG16’s dense classifier relies on a high-dimensional 4096-unit representation, which typically enhances separability for fine-grained image tasks. ResNet18’s more compact final layer aligns with the residual model’s dependence on multi-level feature aggregation. MobileNetV2 maintains a low-parameter output layer consistent with its efficiency-focused design, which is especially relevant when analyzing the effect of constrained capacity on gesture differentiation.</p>
+<p>Training, validation, and testing were standardized across models using a shared pipeline. The train_model function handled epoch-wise optimization, recorded training history, and automatically saved the best-performing weights using validation accuracy as the criterion. The test_model function then evaluated the saved best model on the test dataset to obtain unbiased performance metrics. Finally, run_experiment streamlined the entire workflow for reproducibility and ensured consistent execution across all architectures.</p>
+<p>This unified pipeline ensures that all models experience identical data distribution, learning rate schedules, and optimizer behaviors. The use of validation accuracy for checkpoint selection reduces the risk of overfitting-driven model retention and emphasizes generalization performance rather than raw training loss minimization. In addition, the structured logging of loss and accuracy trajectories permits cross-model comparison of convergence rates, instability patterns, and susceptibility to overfitting, all of which contribute to understanding the architectural strengths and limitations of each network.</p>
+</section>
+<section id="initial-experiments">
+<h2>2 Initial Experiments<a class="headerlink" href="#initial-experiments" title="Permalink to this heading">#</a></h2>
+<p>To ensure fair and consistent evaluation across architectures, all models were trained under identical hyperparameters, optimization settings, and data splits. This standardization allows differences in performance to be attributed solely to the model architecture rather than training conditions.</p>
+<p><strong>Table 2-1. Training Configuration</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Component</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Loss Function</p></td>
+<td><p>CrossEntropyLoss</p></td>
+</tr>
+<tr class="row-odd"><td><p>Optimizer</p></td>
+<td><p>Adam (learning rate = 0.0001)</p></td>
+</tr>
+<tr class="row-even"><td><p>Training Duration</p></td>
+<td><p>10 epochs</p></td>
+</tr>
+<tr class="row-odd"><td><p>Hardware</p></td>
+<td><p>GPU-accelerated environment (CUDA when available)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Training from scratch on a relatively small dataset introduces several challenges, including slower convergence, higher variance in gradient updates, and increased dependence on robust regularization. Because the ASL dataset contains limited intra-class diversity, models with large capacity such as VGG16 are expected to converge rapidly but risk memorizing high-frequency details if not properly constrained. ResNet18, benefiting from residual connections, tends to stabilize feature learning earlier in training, which often results in smoother validation curves. MobileNetV2, with its lightweight inverted bottlenecks, may struggle to extract sufficiently rich features when trained from scratch, leading to noisier learning trajectories and slower accuracy gains. The shared training configuration therefore serves as an important experimental control for isolating these architectural phenomena.</p>
+<p>Each model’s training process included forward propagation, loss computation, backpropagation, parameter updates, validation at every epoch, automatic saving of the best-performing weights, and logging of training and validation metrics. A custom plotting utility was also implemented to visualize loss and accuracy trends for each architecture. Such visualization supports analytical assessment of underfitting, overfitting, plateauing behavior, and epoch-level instability, which are all critical when interpreting deeper architectural behavior.</p>
+</section>
+<section id="initial-results">
+<h2>3 Initial Results<a class="headerlink" href="#initial-results" title="Permalink to this heading">#</a></h2>
+<p>Prior to reporting final test accuracies, it is necessary to contextualize the results with respect to model architecture, training configuration, and dataset characteristics. The subsequent evaluation quantifies each model’s ability to extract relevant features from static ASL hand-sign images and to generalize to unseen samples. Observed differences in performance are interpreted in terms of representational capacity, depth, residual connectivity, and parameter efficiency, providing a technical basis for understanding the relative strengths and limitations of each architecture in the context of fine-grained gesture classification.</p>
+<p><img alt="image" src="../_images/11.png" /></p>
+<p><strong>Figure 3-1. ResNet18 Training Performance: Loss and Validation Accuracy Curves</strong></p>
+<p><strong>ResNet18</strong> achieved a final test accuracy of <strong>0.9643</strong> when trained from scratch under identical conditions, demonstrating the efficacy of residual learning in the sign recognition task. The architecture’s skip connections are designed to ensure stable feature learning and efficient gradient propagation in deep networks, which is reflected in the training history: both training and validation loss curves exhibited rapid, smooth convergence, stabilizing below 0.1 by the final epochs, while validation accuracy showed a consistent, monotonic increase, peaking above 0.95. This strong performance is particularly noteworthy because it was obtained with a significantly lower parameter count (approximately 11.7 million) compared to other high-performing models, confirming that ResNet18 successfully leverages the architectural efficiency of residual blocks to achieve excellent generalization capacity. The model’s ability to maintain high accuracy while utilizing fewer parameters underscores its suitability for fine-grained hand-sign classification and suggests that residual learning can compensate for reduced network depth when feature extraction is efficiently managed.</p>
+<p><img alt="image" src="../_images/21.png" /></p>
+<p><strong>Figure 3-2. VGG16 Training Performance: Loss and Validation Accuracy Curves</strong></p>
+<p><strong>VGG16</strong> achieved a final test accuracy of <strong>0.9722</strong>, making it the highest-performing model among the architectures tested. Implemented as a representative of deep sequential networks, VGG16 is characterized by a large number of layers and uniform 3×3 convolutional kernels, providing substantial representational capacity to capture subtle variations in hand-sign features. The model’s high performance is consistent with its considerable parameter count (≈138 million), which enables fine-grained discrimination across the 26 ASL letters. Training dynamics, visualized in the associated plots, indicate rapid loss minimization: both training and validation losses decreased quickly and stabilized near zero by Epoch 7. The validation accuracy curve shows steep initial growth, reaching a stable plateau above 0.95 by Epoch 6. Although a marginal divergence in loss curves is observed in later epochs (8–10), suggesting slight overfitting, the depth of VGG16 and its high-dimensional classifier facilitated the strongest feature separability in the final representation space. These characteristics allowed the model to achieve the best overall generalization performance among the architectures tested, highlighting the benefits of high-capacity, sequential designs for fine-grained gesture recognition tasks.</p>
+<p><img alt="image" src="../_images/3.png" /></p>
+<p><strong>Figure 3-1. MobileNetV2 Training Performance: Loss and Validation Accuracy Curves</strong></p>
+<p><strong>MobileNetV2</strong> achieved a final test accuracy of <strong>0.7024</strong>, reflecting a substantial performance drop relative to the other architectures and highlighting the limitations of its lightweight design. The model was included to evaluate the trade-off between computational efficiency and representational capacity, relying heavily on depthwise separable convolutions to minimize parameter count and reduce computational cost. This aggressive reduction in parameters constrained the network’s ability to capture the intricate spatial relationships of hand gestures, resulting in an approximately 27% lower accuracy compared to VGG16 and ResNet18. Training dynamics indicate slow but continuous improvement: both training and validation losses decreased steadily over the 10 epochs, stabilizing around 0.9, while the validation accuracy peaked only at 0.71, demonstrating difficulty in rapidly acquiring robust feature representations. The model’s lightweight structure, optimized for efficiency rather than expressiveness, coupled with training from scratch, limited its capacity to form hierarchical features necessary for fine-grained classification, underscoring the trade-offs inherent in mobile-friendly architectures for complex gesture recognition tasks.</p>
+<p>Collectively, these results demonstrate that architectural design critically influences the ability of CNNs to capture fine-grained spatial features in ASL hand-sign classification. VGG16’s deep sequential structure and high parameter count provided the most robust feature separability, allowing it to encode subtle finger articulations with high fidelity, though with some risk of overfitting in later epochs. ResNet18, despite its lower parameter count, leveraged residual connections to stabilize gradient flow and facilitate hierarchical feature extraction, achieving nearly comparable accuracy while maintaining computational efficiency. In contrast, MobileNetV2’s lightweight depthwise separable convolutions imposed a strict representational bottleneck, limiting its capacity to encode intricate hand geometries and resulting in substantially lower accuracy. These observations underscore the trade-offs between depth, residual connectivity, and parameter efficiency in static gesture recognition tasks. Importantly, they establish that models with sufficient representational breadth—whether through depth, residual learning, or a combination—are essential for capturing the spatial complexity of hand-sign images, providing a rigorous foundation for selecting architectures in subsequent video-based sequence recognition experiments.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Week_3"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Week_2/data_collection.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Data Collection and Preprocessing</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-design">1 Model Design</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initial-experiments">2 Initial Experiments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initial-results">3 Initial Results</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Abainza, Casino, Culanggo, dela Cruz
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
