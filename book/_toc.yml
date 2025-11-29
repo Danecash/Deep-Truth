@@ -11,3 +11,9 @@ parts:
   - caption: Week 3 Model Design and Initial Experiments
     chapters:
       - file: Week_3/model_design
+  - caption: Week 4 Results and Discussion
+    chapters:
+      - file: Week_4/results_discussion
+  - caption: Week 5 Final Report
+    chapters:
+      - file: Week_5/final_report
