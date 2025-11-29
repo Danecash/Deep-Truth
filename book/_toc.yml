@@ -13,7 +13,7 @@ parts:
       - file: Week_3/model_design
   - caption: Week 4 Results and Discussion
     chapters:
-      - file: Week_4/results_discussion
+      - file: Week_4/results_discussions
   - caption: Week 5 Final Report
     chapters:
       - file: Week_5/final_report
