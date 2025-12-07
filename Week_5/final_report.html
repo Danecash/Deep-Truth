@@ -388,7 +388,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">1   Introduction</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-collection-and-preprocessing">Data Collection and Preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-collection-and-preprocessing">2 Data Collection and Preprocessing</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-design-and-initial-experiments">3   Model Design and Initial Experiments</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results-and-discussion">4 Results and Discussion</a></li>
 </ul>
@@ -433,7 +433,7 @@ document.write(`
 <p><strong>Evaluate Model Performance and Identify the Optimal YOLO Variant.</strong> Assess the classification performance on the image dataset using mAP50-95, precision, and recall. For the pre-recorded video datasets, evaluate character accuracy, character error rate, word error rate, and subsequence accuracy. Compare the results of YOLOv8-n and YOLOv8-s to identify which variant offers the best balance of accuracy, inference speed, and computational efficiency for educational applications.</p>
 </section>
 <section id="data-collection-and-preprocessing">
-<h2>Data Collection and Preprocessing<a class="headerlink" href="#data-collection-and-preprocessing" title="Permalink to this heading">#</a></h2>
+<h2>2 Data Collection and Preprocessing<a class="headerlink" href="#data-collection-and-preprocessing" title="Permalink to this heading">#</a></h2>
 <p><strong>2.1 Data Collection</strong></p>
 <p><strong>Image Dataset.</strong> The dataset used in this study is the American Sign Language Letters dataset, an object detection dataset containing images of each ASL letter annotated with bounding boxes. Curated by David Lee, a data scientist specializing in accessibility, the dataset is publicly available and designed to support the development of computer vision models capable of interpreting ASL letters. Hosted on the Roboflow platform, the dataset allows for easy integration into YOLOv8-compatible pipelines and supports additional preprocessing and augmentation to improve model generalization. Each image contains one or more instances of ASL letters labeled with bounding boxes that define the spatial location of each sign, enabling models to learn both classification and localization. The dataset’s structure and flexibility make it particularly suitable for educational platforms, as it allows the creation of models that can accurately detect letters across varied hand positions, orientations, and backgrounds, bridging the gap between static recognition and real-world application scenarios.</p>
 <p><img alt="image" src="../_images/1.png" /></p>
@@ -847,7 +847,7 @@ The video’s rotation metadata is read using OpenCV’s CAP_PROP_ORIENTATION_ME
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">1   Introduction</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-collection-and-preprocessing">Data Collection and Preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-collection-and-preprocessing">2 Data Collection and Preprocessing</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-design-and-initial-experiments">3   Model Design and Initial Experiments</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results-and-discussion">4 Results and Discussion</a></li>
 </ul>
