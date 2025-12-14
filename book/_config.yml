@@ -6,7 +6,7 @@ logo: logo.png
 
 
 execute:
-  execute_notebooks: force
+  execute_notebooks: off
 
 
 latex:
