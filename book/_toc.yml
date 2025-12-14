@@ -17,3 +17,6 @@ parts:
   - caption: Week 5 Final Report
     chapters:
       - file: Week_5/final_report
+  - caption: Code Implementation
+    chapters:
+      - file: Code_Implementation/5.2DL-FINAL-PROJECT
